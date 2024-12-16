@@ -24,7 +24,12 @@ class CompanyServiceTest {
     @Test
     void givenDataExists_WhenGetAll_ReturnAllData() {
         //Given
-        var company = new Company(1L, "abc", "LVHABA121232434353", "Riga, Latvia", LocalDate.of(2010, 01, 02));
+        var company = new Company();
+        company.setId(1L);
+        company.setName("abc");
+        company.setBankAccount("LVHABA121232434353");
+        company.setAddress("Riga, Latvia");
+        company.setFirstRegistration(LocalDate.of(2010, 01, 02));
         when(repository.findAll()).thenReturn(List.of(company));
 
         //When
@@ -33,5 +38,35 @@ class CompanyServiceTest {
         //Then
         assertThat(result)
                 .containsExactly(company);
+    }
+
+    @Test
+    void givenAllDataSupplied_WhenCreate_ThenReturnCreatedCompany() {
+        //Given
+        var newCompany = new Company();
+        newCompany.setName("abc");
+        newCompany.setBankAccount("LVHABA121232434353");
+        newCompany.setAddress("Riga, Latvia");
+        newCompany.setFirstRegistration(LocalDate.of(2010, 01, 02));
+
+        var createdCompany = new Company();
+        createdCompany.setId(1L);
+        createdCompany.setName("abc");
+        createdCompany.setBankAccount("LVHABA121232434353");
+        createdCompany.setAddress("Riga, Latvia");
+        createdCompany.setFirstRegistration(LocalDate.of(2010, 01, 02));
+
+        when(repository.save(newCompany)).thenReturn(createdCompany);
+
+        //When
+        var result = service.create(newCompany);
+
+        //Then
+        assertThat(result)
+                .hasFieldOrPropertyWithValue("id", 1L)
+                .hasFieldOrPropertyWithValue("name", "abc")
+                .hasFieldOrPropertyWithValue("bankAccount", "LVHABA121232434353")
+                .hasFieldOrPropertyWithValue("address", "Riga, Latvia")
+                .hasFieldOrPropertyWithValue("firstRegistration", LocalDate.of(2010, 01, 02));
     }
 }

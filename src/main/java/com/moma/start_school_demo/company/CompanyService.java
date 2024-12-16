@@ -17,4 +17,7 @@ public class CompanyService {
         return repository.findAll();
     }
 
+    public Company create(Company company) {
+        return repository.save(company);
+    }
 }

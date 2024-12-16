@@ -1,8 +1,6 @@
 package com.moma.start_school_demo.company;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -11,19 +9,12 @@ import java.time.LocalDate;
 public class Company {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String bankAccount;
     private String address;
     private LocalDate firstRegistration;
-
-    public Company(Long id, String name, String bankAccount, String address, LocalDate firstRegistration) {
-        this.id = id;
-        this.name = name;
-        this.bankAccount = bankAccount;
-        this.address = address;
-        this.firstRegistration = firstRegistration;
-    }
 
     public Long getId() {
         return id;
